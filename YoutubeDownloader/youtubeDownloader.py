@@ -1,6 +1,5 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from pytube import YouTube
-import os
 
 app = Flask(__name__)
 
@@ -12,23 +11,15 @@ def index():
 def descargar():
     url = request.form['url']
     try:
-        descargar_video(url, 'descargas')
-        return 'Video descargado exitosamente!'
+        video_url = obtener_url_directo(url)
+        return redirect(video_url)
     except Exception as e:
-        return f'Error al descargar el video: {e}'
+        return f'Error al obtener el enlace de descarga: {e}'
 
-def descargar_video(url, output_path):
-    
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
-    try:
-        yt = YouTube(url)
-        print(f"Descargando vídeo: {yt.title} ...")
-        yt.streams.get_highest_resolution().download(output_path=output_path)
-        print(f"{yt.title} descargado exitosamente!")
-    except Exception as e:
-        raise e
+def obtener_url_directo(url):
+    yt = YouTube(url)
+    video_stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+    return video_stream.url
 
 if __name__ == '__main__':
     app.run(debug=True)
