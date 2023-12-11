@@ -10,7 +10,7 @@ def index():
         html_content = file.read()
     return render_template_string(html_content)
 
-@app.route('/descargar', methods=['POST'])
+@app.route('/', methods=['POST'])
 def descargar():
     url = request.form['url']
     try:
