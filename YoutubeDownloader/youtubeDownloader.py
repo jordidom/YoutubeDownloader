@@ -1,16 +1,14 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 from pytube import YouTube
 import os
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__)
 
 @app.route('/')
 def index():
-    with open('index.html', 'r') as file:
-        html_content = file.read()
-    return render_template_string(html_content)
+    return render_template('index.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/descargar', methods=['POST'])
 def descargar():
     url = request.form['url']
     try:
@@ -20,8 +18,6 @@ def descargar():
         return f'Error al descargar el video: {e}'
 
 def descargar_video(url, output_path):
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
     try:
         yt = YouTube(url)
         print(f"Descargando vídeo: {yt.title} ...")
