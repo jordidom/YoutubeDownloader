@@ -18,6 +18,10 @@ def descargar():
         return f'Error al descargar el video: {e}'
 
 def descargar_video(url, output_path):
+    
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     try:
         yt = YouTube(url)
         print(f"Descargando vídeo: {yt.title} ...")
