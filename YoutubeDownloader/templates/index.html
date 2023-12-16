@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Descargador de Videos de YouTube</title>
+    <link rel="stylesheet" href="../static/estilos.css">
 </head>
 <body>
-    <h1>Descargar Videos de YouTube</h1>
-    <form action="/descargar" method="post">
-        <label for="url">URL del Video:</label>
-        <input type="text" id="url" name="url" required>
-        <button type="submit">Descargar</button>
-    </form>
+    <div class="container">
+        <header>
+            <h1>Descargar Videos de YouTube</h1>
+        </header>
+        <main>
+            <form action="/descargar" method="post" class="descarga-form">
+                <div class="form-group">
+                    <label for="url">URL del Video:</label>
+                    <input type="text" id="url" name="url" required>
+                </div>
+                <button type="submit" class="btn-descargar">Descargar</button>
+            </form>
+        </main>
+    </div>
 </body>
 </html>
